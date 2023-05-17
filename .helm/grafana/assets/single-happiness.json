@@ -1,0 +1,992 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Happiness stats for a single country",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 3,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "PBA51AF3CCD1342C9"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "noValue": "nan",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 1,
+        "groupWidth": 0.95,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xField": "ts",
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "PBA51AF3CCD1342C9"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "key": "Q-1b7a13c5-5763-4fd9-a791-341378f6ec1d-0",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  *\r\nFROM (\r\n  SELECT \r\n    to_date(\"year\"::TEXT, 'YYYY') AS \"ts\", \r\n    ${happiness_metrics:doublequote}\r\n  FROM raw.years_all \r\n  WHERE \r\n    country_or_region = '$country_or_region'\r\n  ORDER \r\n    BY \"ts\"\r\n) AS s1\r\nWHERE\r\n  $__timeFilter(\"ts\")",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "$country_or_region Happiness Stats",
+      "type": "barchart"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "PBA51AF3CCD1342C9"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 5
+              },
+              {
+                "color": "orange",
+                "value": 6
+              },
+              {
+                "color": "green",
+                "value": 7
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 18,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^happiness_score$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "PBA51AF3CCD1342C9"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  to_date(\"year\"::TEXT, 'YYYY') as \"time\",\r\n  \"happiness_score\"\r\nFROM raw.years_all \r\nWHERE \r\n  \"country_or_region\" = '$country_or_region'\r\nORDER BY\r\n  \"time\"\r\n;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "$country_or_region Score",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "PBA51AF3CCD1342C9"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 10
+              },
+              {
+                "color": "orange",
+                "value": 30
+              },
+              {
+                "color": "red",
+                "value": 50
+              },
+              {
+                "color": "dark-red",
+                "value": 100
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 21,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^happiness_rank$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "PBA51AF3CCD1342C9"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  to_date(\"year\"::TEXT, 'YYYY') AS \"time\",\r\n  \"happiness_rank\",\r\n  \"happiness_score\"\r\nFROM raw.years_all \r\nWHERE \r\n  \"country_or_region\" = '$country_or_region'\r\nORDER BY\r\n  \"time\"\r\n;\r\n  ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "$country_or_region Ranking",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "PBA51AF3CCD1342C9"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 70,
+            "lineWidth": 0,
+            "spanNulls": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 0.3
+              },
+              {
+                "color": "orange",
+                "value": 0.6
+              },
+              {
+                "color": "#EAB839",
+                "value": 1
+              },
+              {
+                "color": "green",
+                "value": 1.3
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "dystopia_residual"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 0.3
+                    },
+                    {
+                      "color": "orange",
+                      "value": 0.6
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    },
+                    {
+                      "color": "dark-red",
+                      "value": 1.3
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 2,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "$$hashKey": "object:49",
+          "aggregation": "Last",
+          "datasource": {
+            "type": "postgres",
+            "uid": "PBA51AF3CCD1342C9"
+          },
+          "decimals": 2,
+          "displayAliasType": "Warning / Critical",
+          "displayType": "Regular",
+          "displayValueWithAlias": "Never",
+          "editorMode": "code",
+          "format": "table",
+          "key": "Q-1b7a13c5-5763-4fd9-a791-341378f6ec1d-0",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  *\r\nFROM (\r\n  SELECT \r\n    to_date(\"year\"::TEXT, 'YYYY') AS \"ts\",\r\n    ${happiness_metrics:doublequote}\r\n  FROM raw.years_all \r\n  WHERE\r\n    country_or_region = '$country_or_region'\r\n  ORDER \r\n    BY year\r\n) AS s1\r\nWHERE\r\n  $__timeFilter(\"ts\")\r\n  ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "units": "none",
+          "valueHandler": "Number Threshold"
+        }
+      ],
+      "title": "$country_or_region Status",
+      "transformations": [],
+      "type": "state-timeline"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "PBA51AF3CCD1342C9"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "id"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 104
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "freedom"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 87
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "year"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 62
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "gdp_per_capita"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 119
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "family"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 71
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "life_expectancy"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 123
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "generosity"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 7,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "PBA51AF3CCD1342C9"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "key": "Q-1b7a13c5-5763-4fd9-a791-341378f6ec1d-0",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  \"year\",\r\n  ${happiness_metrics:doublequote}\r\nFROM (\r\n  SELECT \r\n    to_date(\"year\"::TEXT, 'YYYY') AS \"ts\",\r\n    \"year\",\r\n    ${happiness_metrics:doublequote}\r\n  FROM raw.years_all \r\n  WHERE\r\n    country_or_region = '$country_or_region'\r\n  ORDER \r\n    BY year\r\n) AS s1\r\nWHERE\r\n  $__timeFilter(\"ts\")\r\n  ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "$country_or_region Table",
+      "transformations": [],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "PBA51AF3CCD1342C9"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 8,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 10
+              },
+              {
+                "color": "orange",
+                "value": 30
+              },
+              {
+                "color": "red",
+                "value": 50
+              },
+              {
+                "color": "dark-red",
+                "value": 100
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 15
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "PBA51AF3CCD1342C9"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "key": "Q-1b7a13c5-5763-4fd9-a791-341378f6ec1d-0",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  *\r\n  -- \"year\",\r\n  -- ${happiness_metrics:doublequote}\r\nFROM (\r\n  SELECT \r\n    -- \"year\",\r\n    to_date(\"year\"::TEXT, 'YYYY') AS \"ts\",\r\n    ${happiness_metrics:doublequote}\r\n  FROM raw.countries_yearly_rankings() \r\n  WHERE \r\n    country_or_region = '$country_or_region'\r\n) AS s\r\nWHERE\r\n  $__timeFilter(\"ts\") \r\n  ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "$country_or_region Rankings",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "PBA51AF3CCD1342C9"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 8,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 15
+      },
+      "id": 8,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "PBA51AF3CCD1342C9"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "key": "Q-1b7a13c5-5763-4fd9-a791-341378f6ec1d-0",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  *\r\n  -- \"year\",\r\n  -- ${happiness_metrics:doublequote}\r\nFROM (\r\n  SELECT \r\n    -- \"year\",\r\n    to_date(\"year\"::TEXT, 'YYYY') AS \"ts\",\r\n    ${happiness_metrics:doublequote}\r\n  FROM raw.countries_yearly_rankings() \r\n  WHERE \r\n    country_or_region = '$country_or_region'\r\n) AS s\r\nWHERE\r\n  $__timeFilter(\"ts\") \r\n  ",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "$country_or_region Rankings Transformed",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "gdp_per_capita",
+                "family",
+                "life_expectancy",
+                "freedom",
+                "government_corruption",
+                "generosity",
+                "dystopia_residual"
+              ],
+              "reducer": "mean"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
+      "type": "timeseries"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": "Sweden",
+          "value": "Sweden"
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "PBA51AF3CCD1342C9"
+        },
+        "definition": "SELECT DISTINCT \"country_or_region\" FROM raw.years_all",
+        "description": "Countries for which to list data",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Country or Regioi",
+        "multi": false,
+        "name": "country_or_region",
+        "options": [],
+        "query": "SELECT DISTINCT \"country_or_region\" FROM raw.years_all",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": "\"gdp_per_capita\",\"family\",\"life_expectancy\",\"freedom\",\"government_corruption\",\"generosity\",\"dystopia_residual\"",
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "PBA51AF3CCD1342C9"
+        },
+        "definition": "SELECT *\nFROM\n(\n\tVALUES\n\t\t('GDP per Capita', 'gdp_per_capita'),\n\t\t('Family', 'family'),\n                ('Life Expectancy', 'life_expectancy'),\n                ('Freedom', 'freedom'),\n                ('Government Corruption', 'government_corruption'),\n                ('Generosity', 'generosity'),\n\t\t('Dystopia Residual', 'dystopia_residual')\n) AS t (__text, __value)",
+        "description": "Happines metrics to display",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Happiness metrics",
+        "multi": true,
+        "name": "happiness_metrics",
+        "options": [],
+        "query": "SELECT *\nFROM\n(\n\tVALUES\n\t\t('GDP per Capita', 'gdp_per_capita'),\n\t\t('Family', 'family'),\n                ('Life Expectancy', 'life_expectancy'),\n                ('Freedom', 'freedom'),\n                ('Government Corruption', 'government_corruption'),\n                ('Generosity', 'generosity'),\n\t\t('Dystopia Residual', 'dystopia_residual')\n) AS t (__text, __value)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "2014-12-31T22:00:00.000Z",
+    "to": "2019-01-01T21:00:00.000Z"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "Single country happiness",
+  "uid": "nrf6i8hVk",
+  "version": 3,
+  "weekStart": ""
+}

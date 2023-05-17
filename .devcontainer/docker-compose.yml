@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  notebooks:
+    environment:
+      GH_TOKEN: ${GH_TOKEN}
+    volumes:
+      - type: volume
+        source: vscode-server-extensions
+        target: /home/econ/.vscode-server/extensions
+      - type: volume
+        source: vscode-server-insiders-extensions
+        target: /home/econ/.vscode-server-insiders/extensions
+    command: /bin/sh -c "while sleep 1000; do :; done"
+
+volumes:
+  vscode-server-extensions:
+    name: nextjs-grpc-notebooks-vscode-server-extensions
+  vscode-server-insiders-extensions:
+    name: nextjs-grpc-notebooks-vscode-server-insiders-extensions

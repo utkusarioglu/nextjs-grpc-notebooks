@@ -1,0 +1,7 @@
+vault:
+  fqdn: https://vault.nextjs-grpc.utkusarioglu.com
+  port: 8200
+  certPath: /utkusarioglu-com/projects/nextjs-grpc/notebooks/.certs/root/root.crt
+postgresql:
+  host: "postgres-storage.nextjs-grpc.utkusarioglu.com"
+  port: 5432

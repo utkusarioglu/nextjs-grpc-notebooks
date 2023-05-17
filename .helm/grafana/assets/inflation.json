@@ -1,0 +1,451 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 4,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "P44368ADAD746BC27"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "pointSize": {
+              "fixed": 5
+            },
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "show": "lines"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "maxPerRow": 12,
+      "options": {
+        "dims": {
+          "exclude": [
+            "id"
+          ],
+          "x": "year"
+        },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "series": [],
+        "seriesMapping": "auto",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.3.2",
+      "repeat": "country_code",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "P44368ADAD746BC27"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "key": "Q-93b4f006-d0ed-41d9-b36d-709b8998604f-0",
+          "rawQuery": true,
+          "rawSql": "SELECT \r\n  c.country_name, \r\n  c.country_code, \r\n  d.year, \r\n  d.value \r\nFROM inflation.country_list c \r\nINNER JOIN \r\n  inflation.inflation_data d ON c.id = d.country_id \r\nWHERE \r\n  country_code IN ($country_code)\r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "$country_code Inflation Data",
+      "type": "xychart"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "P44368ADAD746BC27"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "fillOpacity": 100,
+            "lineWidth": 0,
+            "spanNulls": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "from": -10,
+                "result": {
+                  "color": "dark-purple",
+                  "index": 0,
+                  "text": "Deflation"
+                },
+                "to": 0
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 0,
+                "result": {
+                  "color": "blue",
+                  "index": 1,
+                  "text": "Low"
+                },
+                "to": 1
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 1,
+                "result": {
+                  "color": "green",
+                  "index": 2,
+                  "text": "Normal"
+                },
+                "to": 4
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 4,
+                "result": {
+                  "color": "yellow",
+                  "index": 3,
+                  "text": "Moderate"
+                },
+                "to": 10
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 10,
+                "result": {
+                  "color": "orange",
+                  "index": 4,
+                  "text": "High"
+                },
+                "to": 30
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 30,
+                "result": {
+                  "color": "red",
+                  "index": 5,
+                  "text": "Very High"
+                },
+                "to": 100
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 100,
+                "result": {
+                  "color": "dark-red",
+                  "index": 6,
+                  "text": "Hyper"
+                },
+                "to": 1000
+              },
+              "type": "range"
+            }
+          ],
+          "max": 110,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 14,
+        "x": 10,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "mergeValues": false,
+        "rowHeight": 0.9,
+        "showValue": "never",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "repeat": "country_code",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "P44368ADAD746BC27"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "rawQuery": true,
+          "rawSql": "SELECT\r\n  \"decade\" as \"time\",\r\n  \"average\" as \"average\",\r\n  \"stddev\",\r\n  \"min\",\r\n  \"max\"\r\nFROM inflation.decade_stats\r\nWHERE \r\n  country_code IN ($country_code)",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "$country_code",
+      "type": "state-timeline"
+    },
+    {
+      "datasource": {
+        "type": "postgres",
+        "uid": "P44368ADAD746BC27"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 2,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.3.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "postgres",
+            "uid": "P44368ADAD746BC27"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "key": "Q-93b4f006-d0ed-41d9-b36d-709b8998604f-0",
+          "rawQuery": true,
+          "rawSql": "SELECT c.id, country_name, c.country_code, d.year, d.value FROM inflation.country_list c INNER JOIN inflation.inflation_data d ON c.id = d.country_id; \r\n",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "New Panel",
+      "type": "table"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "United States",
+            "Turkiye"
+          ],
+          "value": [
+            "USA",
+            "TUR"
+          ]
+        },
+        "datasource": {
+          "type": "postgres",
+          "uid": "P44368ADAD746BC27"
+        },
+        "definition": "Select distinct country_name as __text ,country_code as __value from inflation.country_list",
+        "description": "Country code to query",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Country Code",
+        "multi": true,
+        "name": "country_code",
+        "options": [],
+        "query": "Select distinct country_name as __text ,country_code as __value from inflation.country_list",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "1970-01-01T00:00:01.960Z",
+    "to": "1970-01-01T00:00:02.020Z"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "inflation",
+  "uid": "JziB3xhVz",
+  "version": 6,
+  "weekStart": ""
+}

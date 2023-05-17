@@ -1,0 +1,4 @@
+dependencies:
+  - anaconda::psycopg2=2.9.3
+  - conda-forge::sqlalchemy=1.4.46
+  - conda-forge::cmasher=1.6.3

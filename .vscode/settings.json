@@ -1,0 +1,25 @@
+{
+  "jupyter.kernels.filter": [
+    {
+      "path": "/opt/conda/bin/python",
+      "type": "pythonEnvironment"
+    }
+  ],
+  "runOnSave.commands": [
+    {
+      "match": "\\.env(\\.\\w+)?$",
+      "notMatch": "\\.example$",
+      "isAsync": true,
+      "command": "/scripts/create-env-example.sh"
+    },
+    {
+      "match": "\\.env$",
+      "isAsync": true,
+      "command": "gh secret set -f .env"
+    }
+  ],
+  "python.linting.flake8Enabled": true,
+  "python.linting.enabled": true,
+  "python.linting.flake8Path": "/opt/conda/envs/econ/lib/python3.10/site-packages/flake8",
+  "python.analysis.typeCheckingMode": "basic"
+}

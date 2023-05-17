@@ -1,0 +1,31 @@
+# empty
+grafana-operator:
+  namespaceOverride: grafana
+  operator:
+    scanNamespaces:
+      - grafana
+  grafana:
+    ingress:
+      enabled: true
+      hostname: data-workshop.utkusarioglu.com
+    dashboardLabelSelectors:
+      - matchLabels:
+          app: grafana
+    # dashboardNamespaceSelector:
+    #   - matchLabels:
+    #       app: grafana
+    #   - grafana
+    config:
+      log:
+        mode: "console"
+        level: "info"
+      log.frontend:
+        enabled: true
+      auth:
+        disable_login_form: false
+        disable_signout_menu: false
+      auth.anonymous:
+        enabled: false
+      security:
+        admin_user: admin
+        admin_password: admin

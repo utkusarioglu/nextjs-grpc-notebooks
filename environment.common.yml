@@ -1,0 +1,7 @@
+name: econ
+channels:
+  - defaults
+dependencies:
+  - anaconda::flake8=6.0.0
+  - conda-forge::black=22.12.0
+  - conda-forge::black-jupyter=22.12.0

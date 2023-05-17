@@ -1,0 +1,9 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: happiness
+  namespace: grafana
+  labels:
+    app: grafana
+spec:
+  json: {{ .Files.Get "assets/single-happiness.json" | quote | nindent 4 }}

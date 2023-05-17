@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  notebooks:
+    # image: utkusarioglu/conda-econ-devcontainer:1.0.10
+    image: utkusarioglu/conda-econ-devcontainer:1.0.11
+    extra_hosts:
+      notebooks.nextjs-grpc.utkusarioglu.com: host-gateway
+      postgres-storage.nextjs-grpc.utkusarioglu.com: host-gateway
+      vault.nextjs-grpc.utkusarioglu.com: host-gateway
+    environment:
+      PYTHONPATH: /utkusarioglu-com/projects/nextjs-grpc/notebooks
+      # PERSISTENT_VOLUMES_ROOT: ${HOME}/dev/volumes/data-workshop
+      # TARGET_VOLUMES_ROOT: /var/lib/rancher/k3s/storage
+      # CLUSTER_REGION: us-west-1
+    volumes:
+      - type: bind
+        source: ..
+        target: /utkusarioglu-com/projects/nextjs-grpc/notebooks
+#       - type: volume
+#         source: conda-notebooks
+#         target: /home/econ/.conda
+
+# volumes:
+#   conda-notebooks:
+#     name: nextjs-grpc-notebooks-conda

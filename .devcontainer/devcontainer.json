@@ -1,0 +1,26 @@
+{
+  "name": "notebooks.nextjs-grpc.utkusarioglu.com",
+  "dockerComposeFile": [
+    "../.docker/docker-compose.dev.yml",
+    "docker-compose.yml"
+  ],
+  "service": "notebooks",
+  "workspaceFolder": "/utkusarioglu-com/projects/nextjs-grpc/notebooks",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "workbench.colorCustomizations": {
+          "activityBar.background": "#e79e01",
+          "activityBar.foreground": "#000000"
+        }
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "ms-python.black-formatter",
+        "bradymholt.pgformatter"
+      ]
+    }
+  },
+  "postCreateCommand": "scripts/post-create-command.sh"
+}

@@ -1,0 +1,9 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: inflation
+  namespace: grafana
+  labels:
+    app: grafana
+spec:
+  json: {{ .Files.Get "assets/inflation.json" | quote | nindent 4 }}
